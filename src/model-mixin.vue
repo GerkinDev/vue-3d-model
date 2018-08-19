@@ -44,6 +44,9 @@ export default {
         src: {
             type: String
         },
+        content: {
+            type: String
+        },
         width: {
             type: Number
         },
@@ -174,6 +177,9 @@ export default {
     },
     watch: {
         src() {
+            this.load();
+        },
+        content() {
             this.load();
         },
         rotation: {
@@ -440,16 +446,15 @@ export default {
         },
         load() {
 
-            if ( !this.src ) return;
+            if ( !this.src && !this.content ) return;
 
             if ( this.object ) {
 
                 this.wrapper.remove( this.object );
 
             }
-
-            this.loader.load( this.src, ( ...args ) => {
-
+            
+            const loadCallback = ( ...args ) => {
                 const object = this.getObject( ...args )
 
                 if ( this.process ) {
@@ -460,16 +465,21 @@ export default {
 
                 this.$emit( 'on-load' );
 
-            }, xhr => {
+            };
 
-                this.$emit( 'on-progress', xhr );
+            if( this.src ){
+                this.loader.loadUrl( this.src, loadCallback, xhr => {
 
-            }, err => {
+                    this.$emit( 'on-progress', xhr );
 
-                this.$emit( 'on-error', err );
+                }, err => {
 
-            } );
+                    this.$emit( 'on-error', err );
 
+                } );
+            } else if( this.content ){
+                this.loader.loadString( this.content, loadCallback );
+            }
         },
         getObject( object ) {
 

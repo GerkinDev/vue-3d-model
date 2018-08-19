@@ -27,6 +27,12 @@ ColladaLoader.prototype = {
 
     },
 
+    loadString: function ( textContent, onLoad ) {
+        var scope = this;
+        var path = THREE.Loader.prototype.extractUrlBase( url );
+
+        onLoad( scope.parse( textContent, path ) );
+    },
     options: {
 
         set convertUpAxis( value ) {

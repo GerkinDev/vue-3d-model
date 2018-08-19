@@ -29,7 +29,7 @@ MTLLoader.prototype = {
      * @note In order for relative texture references to resolve correctly
      * you must call setPath and/or setTexturePath explicitly prior to load.
      */
-    load: function ( url, onLoad, onProgress, onError ) {
+    loadUrl: function ( url, onLoad, onProgress, onError ) {
 
         var scope = this;
 
@@ -41,6 +41,11 @@ MTLLoader.prototype = {
 
         }, onProgress, onError );
 
+    },
+    loadString: function ( textContent, onLoad ) {
+        var scope = this;
+
+        onLoad( scope.parse( textContent ) );
     },
 
     /**

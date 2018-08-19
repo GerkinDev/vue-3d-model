@@ -12,7 +12,7 @@ PLYLoader.prototype = {
 
     constructor: PLYLoader,
 
-    load: function ( url, onLoad, onProgress, onError ) {
+    loadUrl: function ( url, onLoad, onProgress, onError ) {
 
         var scope = this;
 
@@ -24,6 +24,11 @@ PLYLoader.prototype = {
 
         }, onProgress, onError );
 
+    },
+    loadString: function ( textContent, onLoad ) {
+        var scope = this;
+
+        onLoad( scope.parse( textContent ) );
     },
 
     setPropertyNameMapping: function ( mapping ) {

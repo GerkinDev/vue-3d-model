@@ -12,8 +12,7 @@ STLLoader.prototype = {
 
     constructor: STLLoader,
 
-    load: function ( url, onLoad, onProgress, onError ) {
-
+    loadUrl: function ( url, onLoad, onProgress, onError ) {
         var scope = this;
 
         var loader = new THREE.FileLoader( scope.manager );
@@ -24,6 +23,11 @@ STLLoader.prototype = {
 
         }, onProgress, onError );
 
+    },
+    loadString: function ( textContent, onLoad ) {
+        var scope = this;
+
+        onLoad( scope.parse( textContent ) );
     },
 
     parse: function ( data ) {

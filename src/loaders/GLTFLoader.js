@@ -21,7 +21,7 @@ GLTFLoader.prototype = {
 
     crossOrigin: 'Anonymous',
 
-    load: function ( url, onLoad, onProgress, onError ) {
+    loadUrl: function ( url, onLoad, onProgress, onError ) {
 
         var scope = this;
 
@@ -53,6 +53,11 @@ GLTFLoader.prototype = {
 
         }, onProgress, onError );
 
+    },
+    loadString: function ( textContent, onLoad ) {
+        var scope = this;
+
+        onLoad( scope.parse( textContent ) );
     },
 
     setCrossOrigin: function ( value ) {
